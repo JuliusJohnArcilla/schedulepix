@@ -112,3 +112,7 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: 
 .deco-rotate { left: 50%; top: -30px; margin-left: -8px; cursor: grab; }
 .deco-rotate::after { content: ''; position: absolute; left: 50%; top: 100%; width: 1.5px; height: 14px; margin-left: -0.75px; background: var(--accent); }
 .tabs button { padding: 11px 2px; font-size: 13px; }
+
+.bgrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.colorpick.big { font-size: 13px; color: var(--text); }
+.colorpick.big input { width: 36px; height: 30px; border: 1px solid var(--border); border-radius: 6px; }

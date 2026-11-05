@@ -40,6 +40,21 @@ export default function App() {
   const loaded = useRef(false)
   const backupInput = useRef<HTMLInputElement>(null)
   const shiftRef = useRef(false)
+  const [wsBg, setWsBg] = useState(() => {
+    try {
+      return localStorage.getItem('schedulepix-ws-bg') || '#ffffff'
+    } catch {
+      return '#ffffff'
+    }
+  })
+  const changeWsBg = (c: string) => {
+    setWsBg(c)
+    try {
+      localStorage.setItem('schedulepix-ws-bg', c)
+    } catch {
+      /* storage unavailable; the choice just won't persist */
+    }
+  }
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -346,6 +361,7 @@ export default function App() {
             selectedId={selectedId}
             preview={preview}
             gridRef={gridRef}
+            wsBg={wsBg}
             onSelect={select}
             onDur={(id, dur) => updateItem(id, { dur }, 'resize')}
             onDecoChange={updateDeco}
@@ -357,6 +373,8 @@ export default function App() {
             doc={doc}
             images={Object.values(images)}
             selected={selected}
+            wsBg={wsBg}
+            onWsBg={changeWsBg}
             selectedDeco={selectedDeco}
             onDeco={(patch, key) => selectedDeco && updateDeco(selectedDeco.id, patch, key)}
             onDecoAction={decoAction}

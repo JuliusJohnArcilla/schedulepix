@@ -17,6 +17,8 @@ interface Props {
   doc: Doc
   images: ImgEntry[]
   selected: Item | null
+  wsBg: string
+  onWsBg: (c: string) => void
   selectedDeco: Deco | null
   onDeco: (patch: Partial<Deco>, key: string) => void
   onDecoAction: (a: 'delete' | 'duplicate' | 'forward' | 'back') => void
@@ -197,6 +199,20 @@ export function Inspector(p: Props) {
 
       {tab === 'theme' && (
         <div className="panel">
+          <div className="bgrow">
+            <label className="colorpick big">
+              <input type="color" value={t.bg} onChange={(e) => p.onTheme({ bg: e.target.value }, 'cbg')} />
+              <span>Schedule background</span>
+            </label>
+            <button className="btn" disabled={t.bg.toLowerCase() === '#ffffff'} onClick={() => p.onTheme({ bg: '#ffffff' }, 'cbg')}>White</button>
+          </div>
+          <div className="bgrow">
+            <label className="colorpick big">
+              <input type="color" value={p.wsBg} onChange={(e) => p.onWsBg(e.target.value)} />
+              <span>Editor background</span>
+            </label>
+            <button className="btn" disabled={p.wsBg.toLowerCase() === '#ffffff'} onClick={() => p.onWsBg('#ffffff')}>White</button>
+          </div>
           <span className="label">Palette</span>
           <div className="palettes">
             {Object.entries(PALETTES).map(([name, pal]) => (
@@ -218,7 +234,7 @@ export function Inspector(p: Props) {
           </Field>
           <div className="colors">
             {(
-              [['bg', 'Background'], ['headerBg', 'Header'], ['headerText', 'Header text'], ['bannerBg', 'Banner'], ['bannerText', 'Banner text'], ['gridLine', 'Grid lines'], ['timeText', 'Time labels'], ['accent', 'Accent']] as [keyof Theme, string][]
+              [['headerBg', 'Header'], ['headerText', 'Header text'], ['bannerBg', 'Banner'], ['bannerText', 'Banner text'], ['gridLine', 'Grid lines'], ['timeText', 'Time labels'], ['accent', 'Accent']] as [keyof Theme, string][]
             ).map(([k, label]) => (
               <label key={k} className="colorpick">
                 <input type="color" value={t[k] as string} onChange={(e) => p.onTheme({ [k]: e.target.value }, 'c' + k)} />

@@ -157,13 +157,14 @@ interface GridProps {
   selectedId: string | null
   preview: Placement | null
   gridRef: RefObject<HTMLDivElement | null>
+  wsBg: string
   onSelect: (id: string | null, kind?: 'item' | 'deco') => void
   onDecoChange: (id: string, patch: Partial<Deco>, key: string) => void
   onDur: (id: string, dur: number) => void
   onCreateAt: (day: number, start: number) => void
 }
 
-export function Grid({ doc, images, selectedId, preview, gridRef, onSelect, onDur, onDecoChange, onCreateAt }: GridProps) {
+export function Grid({ doc, images, selectedId, preview, gridRef, wsBg, onSelect, onDur, onDecoChange, onCreateAt }: GridProps) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const [fontTick, setFontTick] = useState(0)
   const g = geometry(doc.settings, doc.theme)
@@ -192,7 +193,7 @@ export function Grid({ doc, images, selectedId, preview, gridRef, onSelect, onDu
   const pr = preview ? itemRect(preview.day, preview.start, preview.dur, 0, 1, doc.settings, g) : null
 
   return (
-    <div className="grid-scroll" onClick={() => onSelect(null)}>
+    <div className="grid-scroll" style={{ background: wsBg }} onClick={() => onSelect(null)}>
       <div
         ref={gridRef}
         className="grid-surface"
