@@ -234,7 +234,7 @@ export function Inspector(p: Props) {
           </Field>
           <div className="colors">
             {(
-              [['headerBg', 'Header'], ['headerText', 'Header text'], ['bannerBg', 'Banner'], ['bannerText', 'Banner text'], ['gridLine', 'Grid lines'], ['timeText', 'Time labels'], ['accent', 'Accent']] as [keyof Theme, string][]
+              [['headerBg', 'Header'], ['headerText', 'Header text'], ['bannerBg', 'Banner'], ['bannerText', 'Banner text'], ['gridLine', 'Grid lines'], ['timeText', 'Time labels'], ['accent', 'Accent'], ['borderColor', 'Border color']] as [keyof Theme, string][]
             ).map(([k, label]) => (
               <label key={k} className="colorpick">
                 <input type="color" value={t[k] as string} onChange={(e) => p.onTheme({ [k]: e.target.value }, 'c' + k)} />
@@ -257,8 +257,11 @@ export function Inspector(p: Props) {
               </select>
             </Field>
           </div>
+          <Field label={`Border width (${t.borderWidth}px)`}>
+            <input type="range" min={0} max={12} value={t.borderWidth} onChange={(e) => p.onTheme({ borderWidth: +e.target.value }, 'bw')} />
+          </Field>
           <Field label={`Corner radius (${t.radius}px)`}>
-            <input type="range" min={0} max={24} value={t.radius} onChange={(e) => p.onTheme({ radius: +e.target.value }, 'radius')} />
+            <input type="range" min={0} max={40} value={t.radius} onChange={(e) => p.onTheme({ radius: +e.target.value }, 'radius')} />
           </Field>
         </div>
       )}

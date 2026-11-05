@@ -144,6 +144,17 @@ export async function exportImage(doc: Doc, images: Record<string, ImgEntry>, o:
   canvas.height = Math.floor(g.height * scale)
   const ctx = canvas.getContext('2d')!
   ctx.scale(scale, scale)
+  // Clip everything to the schedule's rounded outline (corner radius also applies to the schedule itself)
+  const { radius, borderWidth, borderColor } = doc.theme
+  if (o.format === 'jpeg') {
+    // JPG has no alpha, so fill the rounded-off corners with white instead of black
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, g.width, g.height)
+  }
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(0, 0, g.width, g.height, radius)
+  ctx.clip()
   drawBackground(ctx, doc, g, o.format === 'jpeg' || !o.transparent)
   drawDecos(ctx, doc.decos.filter((d) => d.behind), images)
   const lanes = assignLanes(doc.items)
@@ -152,6 +163,14 @@ export async function exportImage(doc: Doc, images: Record<string, ImgEntry>, o:
     drawItem(ctx, it, itemRect(it.day, it.start, it.dur, l.lane, l.lanes, doc.settings, g), doc, images)
   }
   drawDecos(ctx, doc.decos.filter((d) => !d.behind), images)
+  ctx.restore()
+  if (borderWidth > 0) {
+    ctx.strokeStyle = borderColor
+    ctx.lineWidth = borderWidth
+    ctx.beginPath()
+    ctx.roundRect(borderWidth / 2, borderWidth / 2, g.width - borderWidth, g.height - borderWidth, Math.max(0, radius - borderWidth / 2))
+    ctx.stroke()
+  }
   return new Promise((resolve, reject) =>
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Image is too large for this browser to export. Try a smaller scale.'))), `image/${o.format}`, o.quality),
   )

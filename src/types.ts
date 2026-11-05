@@ -11,6 +11,8 @@ export interface Theme {
   showBanner: boolean
   gridStyle: 'solid' | 'dashed' | 'none'
   radius: number
+  borderWidth: number
+  borderColor: string
 }
 
 export interface Settings {

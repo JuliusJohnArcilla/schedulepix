@@ -197,7 +197,7 @@ export function Grid({ doc, images, selectedId, preview, gridRef, wsBg, onSelect
       <div
         ref={gridRef}
         className="grid-surface"
-        style={{ width: g.width, height: g.height }}
+        style={{ width: g.width, height: g.height, borderRadius: doc.theme.radius }}
         onDoubleClick={(e) => {
           const r = e.currentTarget.getBoundingClientRect()
           const x = e.clientX - r.left - 64
@@ -208,10 +208,11 @@ export function Grid({ doc, images, selectedId, preview, gridRef, wsBg, onSelect
           onCreateAt(day, min)
         }}
       >
-        <canvas ref={canvas} style={{ width: g.width, height: g.height }} />
+        <canvas ref={canvas} style={{ width: g.width, height: g.height, borderRadius: doc.theme.radius }} />
         {doc.decos.filter((d) => d.behind).map((d) => (
           <DecoView key={d.id} deco={d} img={images[d.imageId]} selected={d.id === selectedId} onSelect={() => onSelect(d.id, 'deco')} onChange={(p, k) => onDecoChange(d.id, p, k)} />
         ))}
+        <div className="items-layer" style={{ borderRadius: doc.theme.radius }}>
         {doc.items.map((it) => {
           const l = lanes.get(it.id)!
           return (
@@ -228,9 +229,13 @@ export function Grid({ doc, images, selectedId, preview, gridRef, wsBg, onSelect
             />
           )
         })}
+        </div>
         {doc.decos.filter((d) => !d.behind).map((d) => (
           <DecoView key={d.id} deco={d} img={images[d.imageId]} selected={d.id === selectedId} onSelect={() => onSelect(d.id, 'deco')} onChange={(p, k) => onDecoChange(d.id, p, k)} />
         ))}
+        {doc.theme.borderWidth > 0 && (
+          <div className="frame" style={{ borderRadius: doc.theme.radius, border: `${doc.theme.borderWidth}px solid ${doc.theme.borderColor}` }} />
+        )}
         {pr && <div className="ghost" style={{ left: pr.x, top: pr.y, width: pr.w, height: pr.h, borderRadius: doc.theme.radius }} />}
       </div>
     </div>

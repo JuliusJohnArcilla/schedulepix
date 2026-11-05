@@ -116,3 +116,7 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: 
 .bgrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .colorpick.big { font-size: 13px; color: var(--text); }
 .colorpick.big input { width: 36px; height: 30px; border: 1px solid var(--border); border-radius: 6px; }
+
+.items-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.items-layer .item { pointer-events: auto; }
+.frame { position: absolute; inset: 0; box-sizing: border-box; pointer-events: none; z-index: 40; }

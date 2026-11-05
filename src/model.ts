@@ -15,7 +15,7 @@ export const FONTS = [
 ]
 export const fontCss = (name: string) => (FONTS.find((f) => f.name === name) ?? FONTS[0]).css
 
-export const PALETTES: Record<string, Omit<Theme, 'font' | 'showBanner' | 'gridStyle' | 'radius'>> = {
+export const PALETTES: Record<string, Omit<Theme, 'font' | 'showBanner' | 'gridStyle' | 'radius' | 'borderWidth' | 'borderColor'>> = {
   Clean: { bg: '#ffffff', headerBg: '#f1f5f9', headerText: '#0f172a', bannerBg: '#1e293b', bannerText: '#ffffff', gridLine: '#cbd5e1', timeText: '#64748b', accent: '#3b82f6' },
   Dark: { bg: '#111827', headerBg: '#1f2937', headerText: '#f9fafb', bannerBg: '#030712', bannerText: '#f9fafb', gridLine: '#374151', timeText: '#9ca3af', accent: '#8b5cf6' },
   Pastel: { bg: '#fffaf5', headerBg: '#fde7ef', headerText: '#5b3a4a', bannerBg: '#f9c6d8', bannerText: '#5b3a4a', gridLine: '#f0d9e0', timeText: '#a07d8b', accent: '#f4a6c0' },
@@ -38,7 +38,7 @@ export function defaultDoc(): Doc {
       dayWidth: 170,
       use24h: false,
     },
-    theme: { ...PALETTES.Clean, font: 'Inter', showBanner: true, gridStyle: 'solid', radius: 8 },
+    theme: { ...PALETTES.Clean, font: 'Inter', showBanner: true, gridStyle: 'solid', radius: 8, borderWidth: 0, borderColor: '#334155' },
     items: [],
     decos: [],
   }
